@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MarketPulse Berlin
 
-## Getting Started
+Interactive choropleth map of Berlin's 12 Bezirke, showing real-estate and demographic data with a click-to-explore detail panel.
 
-First, run the development server:
+> 🔗 **Live:** _[add deployment URL]_
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## What it shows
+
+For each of the 12 Berlin districts:
+
+- Population, area, density
+- Average residential rent (€/m² Kaltmiete, Mietspiegel reference)
+- Rent trend (rising, stable, cooling)
+- Commercial real-estate profile and notable features
+- Character / vibe (central, creative, upscale, family, industrial, mixed, suburban)
+
+A metric toggle recolors the choropleth by average rent, density, or population.
+
+## Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19
+- **Language:** TypeScript
+- **Map:** [MapLibre GL JS](https://maplibre.org/) with free CARTO Positron raster tiles
+- **Styling:** Tailwind CSS 4
+- **Deployment:** Vercel
+
+No backend, no database, no LLM, no API key required.
+
+## Architecture
+
+```
+app/
+├── data/
+│   └── districts.ts        # 12 districts × stats + commercial notes
+├── lib/
+│   ├── map-style.ts        # MapLibre style (CARTO Positron raster)
+│   └── colors.ts           # sequential color scale + paint expression
+├── components/
+│   ├── Map.tsx             # MapLibre map (client)
+│   ├── Sidebar.tsx         # district detail panel
+│   └── MetricToggle.tsx    # rent / density / population switcher
+├── page.tsx                # main layout
+├── layout.tsx              # metadata + fonts
+└── globals.css             # Tailwind + MapLibre overrides
+
+public/
+└── data/
+    └── berlin-bezirke.geojson   # 12 Bezirke as MultiPolygons
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Data sources
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Berlin Open Data](https://daten.berlin.de) for districts and boundaries
+- Statistisches Landesamt Berlin-Brandenburg for population and area
+- Berlin Mietspiegel 2024/2025 for rent indices
+- [funke-interaktiv Geodaten](https://github.com/funkeinteraktiv/Berlin-Geodaten) for the GeoJSON
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local development
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open <http://localhost:3000>.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+MIT.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by [Jose Heusser](https://github.com/JoseHeusser) using Claude Code and Cursor.
