@@ -2,7 +2,7 @@
 
 Interactive choropleth map of Berlin's 12 Bezirke, showing real-estate and demographic data with a click-to-explore detail panel.
 
-> 🔗 **Live:** _[add deployment URL]_
+> 🔗 **Live:** <https://marketpulse-berlin.vercel.app>
 
 ## What it shows
 
